@@ -23,84 +23,84 @@ app.run(function ($rootScope, $location, $rootScope) {
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/login', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/login.html',
+            templateUrl: './views/login.html',
             controller: 'LoginController'
         })
         .when('/logout', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/login.html',
+            templateUrl: './views/login.html',
             controller: 'LogOutController',
             requiresAuth: true
         })
         .when('/register', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/register.html',
+            templateUrl: './views/register.html',
             controller: 'LoginController'
         })
         .when('/forgot-password', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/forgot-password.html',
+            templateUrl: './views/forgot-password.html',
             controller: 'LoginController'
         })
         .when('/home', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/home.html',
+            templateUrl: './views/home.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/profile', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/profile.html',
+            templateUrl: './views/profile.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/buttons', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/buttons.html',
+            templateUrl: './views/buttons.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/cards', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/cards.html',
+            templateUrl: './views/cards.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/charts', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/charts.html',
+            templateUrl: './views/charts.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/tables', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/tables.html',
+            templateUrl: './views/tables.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/delegacion', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/delegacion.html',
+            templateUrl: './views/delegacion.html',
             controller: 'HomeController',
             requiresAuth: true,
             requiredRoles: ['admin']
         })
         .when('/utilities-animation', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/utilities-animation.html',
+            templateUrl: './views/utilities-animation.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/utilities-border', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/utilities-border.html',
+            templateUrl: './views/utilities-border.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/utilities-color', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/utilities-color.html',
+            templateUrl: './views/utilities-color.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/utilities-other', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/utilities-other.html',
+            templateUrl: './views/utilities-other.html',
             controller: 'HomeController',
             requiresAuth: true
         })
         .when('/404', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/template/404.html',
+            templateUrl: './views/template/404.html',
             controller: 'HomeController',
         })
         .when('/blank', {
-            templateUrl: 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/views/template/blank.html',
+            templateUrl: './views/template/blank.html',
             controller: 'HomeController',
         })
         .otherwise({
