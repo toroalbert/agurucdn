@@ -1,7 +1,7 @@
-const tabLinks = document.querySelectorAll('#cardTab a');
-const tabContents = document.querySelectorAll('.tab-content .tab-pane');
-const nextButtons = document.querySelectorAll('#cardTabContent .btn-primary');
-const prevButtons = document.querySelectorAll('#cardTabContent .btn-light');
+var tabLinks = document.querySelectorAll('#cardTab a');
+var tabContents = document.querySelectorAll('.tab-content .tab-pane');
+var nextButtons = document.querySelectorAll('#cardTabContent .btn-primary');
+var prevButtons = document.querySelectorAll('#cardTabContent .btn-light');
 
 tabLinks.forEach((tabLink, index) => {
     tabLink.addEventListener('click', (event) => {
