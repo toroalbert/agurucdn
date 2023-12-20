@@ -1,86 +1,139 @@
 <?php
-// Check PHP version.
-$minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
-if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
-    $message = sprintf(
-        'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
-        $minPhpVersion,
-        PHP_VERSION
-    );
+$useCDN = false;
+$base_url = $useCDN ? 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/' : "./";
+?>
 
-    exit($message);
-}
+<!DOCTYPE html>
+<html lang="es" ng-app="app-root">
 
-// Path to the front controller (this file)
-define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
+<head>
+    <!-- <base href="<?= base_url() ?>"> -->
+    <!-- <base href="https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/"> -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-// Ensure the current directory is pointing to the front controller's directory
-if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
-    chdir(FCPATH);
-}
+    <title>{{title}}</title>
 
-/*
- *---------------------------------------------------------------
- * BOOTSTRAP THE APPLICATION
- *---------------------------------------------------------------
- * This process sets up the path constants, loads and registers
- * our autoloader, along with Composer's, loads our constants
- * and fires up an environment-specific bootstrapping.
- */
+    <!-- Custom fonts for this template-->
+    <link href="<?= $base_url ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-// Load our paths config file
-// This is the line that might need to be changed, depending on your folder structure.
-require FCPATH . '../app/Config/Paths.php';
-// ^^^ Change this line if you move your application folder
+    <!-- Custom styles for this template-->
+    <link href="<?= $base_url ?>css/sb-admin-2.css?v=0.1" rel="stylesheet">
 
-$paths = new Config\Paths();
+    <style>
+        #anime {
+            z-index: 9;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
 
-// Location of the framework bootstrap file.
-require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
+        #anime article {
+            height: 100%;
+            padding-top: 33%;
+        }
 
-// Load environment settings from .env files into $_SERVER and $_ENV
-require_once SYSTEMPATH . 'Config/DotEnv.php';
-(new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
+        #anime div {
+            width: 3rem;
+            height: 3rem;
+            margin-top: auto;
+            margin-bottom: auto;
+            mix-blend-mode: lighten;
+        }
+    </style>
+</head>
 
-// Define ENVIRONMENT
-if (!defined('ENVIRONMENT')) {
-    define('ENVIRONMENT', env('CI_ENVIRONMENT', 'production'));
-}
+<body id="page-top" ng-class="{ 'bg-gradient-primary': !hasSession }">
+    <!-- Page Wrapper -->
+    <div ng-attr-id="{{ hasSession ? 'wrapper' : '' }}">
+        <!-- Sidebar -->
+        <ng-include src="'./views/template/sidebar.html'" ng-if="hasSession" class="bg-gradient-primary"></ng-include>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div ng-attr-id="{{ hasSession ? 'content-wrapper' : '' }}" ng-class="{ 'd-flex flex-column': hasSession }">
 
-// Load Config Cache
-// $factoriesCache = new \CodeIgniter\Cache\FactoriesCache();
-// $factoriesCache->load('config');
-// ^^^ Uncomment these lines if you want to use Config Caching.
+            <!-- Main Content -->
+            <div ng-attr-id="{{ hasSession ? 'content' : '' }}">
 
-/*
- * ---------------------------------------------------------------
- * GRAB OUR CODEIGNITER INSTANCE
- * ---------------------------------------------------------------
- *
- * The CodeIgniter class contains the core functionality to make
- * the application run, and does all the dirty work to get
- * the pieces all working together.
- */
+                <!-- Topbar -->
+                <ng-include src="'./views/template/topbar.html'" ng-if="hasSession"></ng-include>
+                <!-- End of Topbar -->
 
-$app = Config\Services::codeigniter();
-$app->initialize();
-$context = is_cli() ? 'php-cli' : 'web';
-$app->setContext($context);
+                <!-- Begin Page Content -->
+                <setion id="view" ng-view>
 
-/*
- *---------------------------------------------------------------
- * LAUNCH THE APPLICATION
- *---------------------------------------------------------------
- * Now that everything is set up, it's time to actually fire
- * up the engines and make this app do its thang.
- */
+                </setion>
+                <!-- /.container-fluid -->
 
-$app->run();
+            </div>
+            <!-- End of Main Content -->
 
-// Save Config Cache
-// $factoriesCache->save('config');
-// ^^^ Uncomment this line if you want to use Config Caching.
+            <!-- Footer -->
+            <ng-include src="'./views/template/footer.html'" ng-if="hasSession"></ng-include>
+            <!-- End of Footer -->
 
-// Exits the application, setting the exit code for CLI-based applications
-// that might be watching.
-exit(EXIT_SUCCESS);
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" to="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-LogOutClose" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="#!/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <preload></preload>
+
+    <section id="scripts">
+        <!-- Bootstrap core JavaScript-->
+        <script src="<?= $base_url ?>vendor/jquery/jquery.min.js"></script>
+        <script src="<?= $base_url ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="<?= $base_url ?>vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="<?= $base_url ?>js/sb-admin-2.min.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="<?= $base_url ?>vendor/chart.js/Chart.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <!-- <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script> -->
+
+        <!-- Anime Animation scripts -->
+        <script src="<?= $base_url ?>js/anime.min.js"></script>
+
+        <!-- angular system -->
+        <script src="<?= $base_url ?>vendor/angular/angular.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="<?= $base_url ?>vendor/angular/angular-route.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="<?= $base_url ?>js/main.js"></script>
+    </section>
+</body>
+
+</html>
