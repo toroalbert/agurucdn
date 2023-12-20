@@ -158,7 +158,7 @@ app.controller("LoginController", function ($scope, $rootScope, $location, $http
             password: $scope.password
         };
 
-        $http.post('api/login', credentials, {
+        $http.post('localhost/api/login', credentials, {
             headers: {
                 'Content-Type': 'application/json',
             }
