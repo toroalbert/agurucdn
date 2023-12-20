@@ -136,7 +136,6 @@ app.controller("SidebarController", function ($scope, $http) {
         });
 });
 
-
 app.controller("app-controller", function ($scope, $rootScope) {
     $rootScope.title = `${title} - Home`;
 });
@@ -202,7 +201,6 @@ app.controller("LogOutController", function ($scope, $rootScope, $location) {
     $location.path('/login');
 
 });
-
 
 function val_login($location, $rootScope, nextRoute) {
     // Verificar si la ruta requiere autenticación
