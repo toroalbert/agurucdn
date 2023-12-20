@@ -7,7 +7,6 @@ $base_url = $useCDN ? 'https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/' : "./";
 <html lang="es" ng-app="app-root">
 
 <head>
-    <!-- <base href="<?= base_url() ?>"> -->
     <!-- <base href="https://cdn.jsdelivr.net/gh/toroalbert/agurucdn/"> -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

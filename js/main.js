@@ -157,31 +157,33 @@ app.controller("LoginController", function ($scope, $rootScope, $location, $http
             username: $scope.username,
             password: $scope.password
         };
+        localStorage.setItem('token', "Token de Prueba");
+        setCookie("token", "Token de Prueba", 1);
+        localStorage.setItem('userRole', "admin");
+        // $http.post('localhost/api/login', credentials, {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     }
+        // })
+        //     .then(function (response) {
+        //         console.log(response);
+        //         // Verificar la respuesta del servidor
+        //         if (response.data.success) {
+        //             // Guardar el token en localStorage
+        //             localStorage.setItem('token', response.data.answer.token);
+        //             setCookie("token", response.data.answer.token, 1);
+        //             localStorage.setItem('userRole', response.data.answer.rol);
 
-        $http.post('localhost/api/login', credentials, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(function (response) {
-                console.log(response);
-                // Verificar la respuesta del servidor
-                if (response.data.success) {
-                    // Guardar el token en localStorage
-                    localStorage.setItem('token', response.data.answer.token);
-                    setCookie("token", response.data.answer.token, 1);
-                    localStorage.setItem('userRole', response.data.answer.rol);
-
-                    // Redirigir a la página de inicio
-                    $location.path('/home');
-                } else {
-                    // Manejar el caso de inicio de sesión fallido
-                    console.log('Inicio de sesión fallido');
-                }
-            })
-            .catch(function (error) {
-                console.error('Error al iniciar sesión:', error);
-            });
+        //             // Redirigir a la página de inicio
+        //             $location.path('/home');
+        //         } else {
+        //             // Manejar el caso de inicio de sesión fallido
+        //             console.log('Inicio de sesión fallido');
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.error('Error al iniciar sesión:', error);
+        //     });
     };
 
     startAnimation();
