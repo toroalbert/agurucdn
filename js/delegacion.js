@@ -1,39 +1,30 @@
-var tabLinks = document.querySelectorAll('#cardTab a');
-var tabContents = document.querySelectorAll('.tab-content .tab-pane');
-var nextButtons = document.querySelectorAll('#cardTabContent .btn-primary');
-var prevButtons = document.querySelectorAll('#cardTabContent .btn-light');
-
-tabLinks.forEach((tabLink, index) => {
-    tabLink.addEventListener('click', (event) => {
+$(document).ready(function () {
+    $('#cardTab a').on('click', function (event) {
         event.preventDefault();
-        showTab(index);
+        showTab($('#cardTab a').index(this));
     });
-});
 
-nextButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-        const currentIndex = Array.from(tabLinks).findIndex((tabLink) => tabLink.classList.contains('active'));
-        const nextIndex = currentIndex + 1;
-        if (nextIndex < tabLinks.length) {
+    $('#cardTabContent .btn-primary').on('click', function () {
+        var currentIndex = $('#cardTab a.active').index();
+        var nextIndex = currentIndex + 1;
+        if (nextIndex < $('#cardTab a').length) {
             showTab(nextIndex);
         }
     });
-});
 
-prevButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-        const currentIndex = Array.from(tabLinks).findIndex((tabLink) => tabLink.classList.contains('active'));
-        const prevIndex = currentIndex - 1;
+    $('#cardTabContent .btn-light').on('click', function () {
+        var currentIndex = $('#cardTab a.active').index();
+        var prevIndex = currentIndex - 1;
         if (prevIndex >= 0) {
             showTab(prevIndex);
         }
     });
+
+    function showTab(index) {
+        $('#cardTab a').removeClass('active');
+        $('.tab-content .tab-pane').removeClass('show active');
+
+        $('#cardTab a').eq(index).addClass('active');
+        $('.tab-content .tab-pane').eq(index).addClass('show active');
+    }
 });
-
-function showTab(index) {
-    tabLinks.forEach((tabLink) => tabLink.classList.remove('active'));
-    tabContents.forEach((tabContent) => tabContent.classList.remove('show', 'active'));
-
-    tabLinks[index].classList.add('active');
-    tabContents[index].classList.add('show', 'active');
-}

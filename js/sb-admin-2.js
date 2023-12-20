@@ -53,4 +53,26 @@
         e.preventDefault();
     });
 
+    $(document).ready(function () {
+        function applyActiveClass(selector) {
+            var currentUrl = window.location.hash;
+
+            // Recorre todos los elementos con la clase nav-item o collapse-item
+            $(selector).each(function () {
+                var link = $(this).is('.collapse-item') ? $(this).attr('href') : $(this).find('a').attr('href');
+
+                // Comprueba si el href coincide con la URL actual y agrega o elimina la clase 'active'
+                $(this).toggleClass('active', link === currentUrl);
+            });
+        }
+
+        // Captura el cambio en la URL
+        $(window).on('hashchange', function () {
+            applyActiveClass('.nav-item, .collapse-item');
+        });
+
+        // Dispara el evento hashchange al cargar la página para aplicar la lógica inicialmente
+        $(window).trigger('hashchange');
+    });
+
 })(jQuery); // End of use strict
