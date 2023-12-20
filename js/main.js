@@ -160,6 +160,7 @@ app.controller("LoginController", function ($scope, $rootScope, $location, $http
         localStorage.setItem('token', "Token de Prueba");
         setCookie("token", "Token de Prueba", 1);
         localStorage.setItem('userRole', "admin");
+        $location.path('/home');
         // $http.post('localhost/api/login', credentials, {
         //     headers: {
         //         'Content-Type': 'application/json',
