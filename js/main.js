@@ -253,7 +253,6 @@ app.controller("RegisterController", function ($scope, $rootScope, $location, $h
                     console.log("Supuesto Token", response.data.answer.token);
                     setCookie("token", response.data.answer.token, 45);
                     localStorage.setItem('userRole', response.data.answer.rol_alias);
-
                     // Redirigir a la página de inicio
                     $location.path('/home');
                 } else {
@@ -339,6 +338,7 @@ function val_login($location, $rootScope, nextRoute) {
         // Redirigir a la página de inicio de sesión si no hay token
         $location.path('/logout');
     }
+    loadScript(localStorage.getItem('userRole'));
 }
 
 function checkUserRole(requiredRoles) {
@@ -411,4 +411,13 @@ function serialize(datos) {
     return Object.keys(datos).map(function (key) {
         return encodeURIComponent(key) + '=' + encodeURIComponent(datos[key]);
     }).join('&')
+}
+
+function loadScript(alias) {
+    var scriptPath = $base_url + 'js/security/' + alias + '.js';
+    $script([scriptPath], function () {
+        // El script se ha cargado, puedes realizar acciones adicionales aquí si es necesario
+        // Por ejemplo, configurar rutas y controladores específicos del rol.
+        // RoleService.configureRoutes(userRoleAlias);
+    });
 }
