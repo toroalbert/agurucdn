@@ -87,6 +87,11 @@ function generateFalseData(cantidad = 400) {
             name: `Event ${paddedNumber}`,
             position: `Position ${paddedNumber}`,
             office: `Office ${paddedNumber}`,
+            create_at: {
+                $date: {
+                    $numberLong: new Date(),
+                }
+            },
             age: i,
             startDate,
             salary: `$${i * 1000}`
@@ -119,6 +124,7 @@ function delSpin(success) {
     setTimeout(() => {
         $this.remove();
     }, 1000);
+    $(".text-hidden").removeClass("text-hidden");
 }
 
 $(document).on("click", '[data-toggle="tooltip"]', function () {

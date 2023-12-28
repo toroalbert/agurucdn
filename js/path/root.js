@@ -115,6 +115,11 @@ newModule.controller("EventsController", function ($scope, $rootScope, $location
             });
         });
 
+    $scope.deleteevents = function (item) {
+        $scope.toDelete = item._id.$oid;
+        $scope.toDeleteName = item.name;
+        $("#confirmDelete").focus();
+    }
 });
 
 newModule.controller("AddEventsController", function ($scope, $rootScope, $location, $http, $timeout) {
@@ -186,8 +191,7 @@ newModule.controller("EditEventsController", function ($scope, $rootScope, $loca
         .then(function (response) {
             // console.log(response.data);
             $scope.evento = response.data.answer;
-            $scope.h1 += `(${$scope.evento.name})`
-            // $scope.eventsArray = generateFalseData(1500);
+            // $scope.h1 += `(${$scope.evento.name})`
         })
         .catch(function (response) {
             delSpin(false);

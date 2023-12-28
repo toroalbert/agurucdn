@@ -1,11 +1,11 @@
-<div class="container-fluid">
+<div class="container-fluid ">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{h1}}</h1>
 
     <!-- DataTales Example -->
     <form id="eventoForm">
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 text-hidden">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Event Data
                     <a href="#!/events" class="text-success float-right" >
@@ -16,13 +16,13 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required ng-model="evento.name"
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Evento" required ng-model="evento.name"
                         ng-keyup="genSlug()">
                 </div>
 
                 <div class="form-group">
                     <label for="slug">Slug</label>
-                    <input type="text" class="form-control" id="slug" name="slug" readonly ng-model="evento.slug">
+                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Slug del Evento" readonly ng-model="evento.slug">
                 </div>
 
                 <div class="form-group">
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <div class="form-group col-6">
+                    <div class="form-group col-lg-6">
                         <label for="logo">Color Primario</label>
                         <div class="input-group">
                             <input type="color" class="form-control input-group-prepend col-1" id="colorPrimario"
@@ -52,7 +52,7 @@
                                 ng-model="evento.cpri">
                         </div>
                     </div>
-                    <div class="form-group col-6">
+                    <div class="form-group col-lg-6">
                         <label for="logo">Color Secundario</label>
                         <div class="input-group">
                             <input type="color" class="form-control input-group-prepend col-1" id="colorPrimario"

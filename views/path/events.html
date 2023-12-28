@@ -1,13 +1,13 @@
-<div class="container-fluid">
+<div class="container-fluid ">
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">Events</h1>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 text-hidden">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Events List
-                <a href="#!/addevents" class="text-success float-right" >
+                <a href="#!/addevents" class="text-success float-right">
                     <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Agregar Evento"></i>
                 </a>
             </h6>
@@ -37,11 +37,12 @@
                             <td>
                                 <a href="./img/events/{{item.logo}}" target="_blank" data-toggle="modal"
                                     data-target="#imageModal">
-                                    {{item.name}}
+                                    ver
                                 </a>
                             </td>
                             <td>
-                                <span data-toggle="tooltip" data-placement="top" title="Time: {{ item.create_at.$date.$numberLong | date:'HH:mm:ss':'UTC' }}">
+                                <span data-toggle="tooltip" data-placement="top"
+                                    title="Time: {{ item.create_at.$date.$numberLong | date:'HH:mm:ss':'UTC' }}">
                                     {{ item.create_at.$date.$numberLong | date:'yyyy-MM-dd':'UTC' }}
                                 </span>
                             </td>
@@ -50,7 +51,8 @@
                                 <a href="#!/editevents/{{item._id.$oid}}" class=" text-success">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="#!/deleteevents/{{item._id.$oid}}" class=" text-success">
+                                <a ng-click="deleteevents(item)" data-toggle="modal" data-target="#delEventModal"
+                                    class=" text-success">
                                     <i class="fa fa-trash-alt"></i>
                                 </a>
                             </td>
@@ -77,6 +79,27 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                Desela Eliminar el evento "{{toDeleteName}}"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="confirmDelete" type="submit" class="btn btn-danger" data-dismiss="modal"
+                    ng-click="confirmDelete(toDelete)">Delete</button>
             </div>
         </div>
     </div>
