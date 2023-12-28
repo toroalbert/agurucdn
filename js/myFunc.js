@@ -103,6 +103,23 @@ function activeHref(href) {
         $(this).toggleClass('active', link === href);
     });
 }
+function addSpin(selector) {
+    const content = `<i id="spinner" class="fa fa-spin fa-spinner ml-2 text-primary"></i>`;
+    $(selector).append(content);
+}
+
+function delSpin(success) {
+    const $this = $("#spinner");
+    $this.removeClass("fa-spin fa-spinner text-primary")
+    if (success) {
+        $this.addClass("fa-check text-success");
+    } else {
+        $this.addClass("fa-times text-danger");
+    }
+    setTimeout(() => {
+        $this.remove();
+    }, 1000);
+}
 
 $(document).on("click", '[data-toggle="tooltip"]', function () {
     $('.tooltip.show').remove();

@@ -78,6 +78,7 @@ newModule.controller("EventsController", function ($scope, $rootScope, $location
     $rootScope.title = `${title} - Events`;
     $rootScope.sidebar = $sidebar;
     $scope.eventsArray = [];
+    addSpin("h1");
 
     $http({
         method: 'POST',
@@ -99,6 +100,7 @@ newModule.controller("EventsController", function ($scope, $rootScope, $location
             // $scope.eventsArray = generateFalseData(1500);
         })
         .catch(function (response) {
+            delSpin(false);
             console.error(response.data);
         })
         .finally(function () {
@@ -109,6 +111,7 @@ newModule.controller("EventsController", function ($scope, $rootScope, $location
                     $(this).find('img').attr('src', imageUrl);
                 });
                 $('[data-toggle="tooltip"]').tooltip();
+                delSpin(true);
             });
         });
 
@@ -118,7 +121,7 @@ newModule.controller("AddEventsController", function ($scope, $rootScope, $locat
     $rootScope.title = `${title} - Agregar Evento`;
     $rootScope.sidebar = $sidebar;
     $scope.h1 = "Agregar Evento ";
-
+    addSpin("h1");
     $scope.genSlug = function () {
         if ($scope.evento && $scope.evento.name) {
             // Obtener el nombre del evento desde el modelo
@@ -153,7 +156,7 @@ newModule.controller("AddEventsController", function ($scope, $rootScope, $locat
     $timeout(function () {
         activeHref("#!/events");
         $('[data-toggle="tooltip"]').tooltip()
-
+        delSpin(true);
     });
 
 });
@@ -164,6 +167,7 @@ newModule.controller("EditEventsController", function ($scope, $rootScope, $loca
     $rootScope.sidebar = $sidebar;
     let eventId = $routeParams.eventId;
     $scope.h1 = "Editar Evento ";
+    addSpin("h1");
     // Resto del código del controlador...
     $http({
         method: 'POST',
@@ -186,6 +190,7 @@ newModule.controller("EditEventsController", function ($scope, $rootScope, $loca
             // $scope.eventsArray = generateFalseData(1500);
         })
         .catch(function (response) {
+            delSpin(false);
             console.error(response.data);
         })
         .finally(function () {
@@ -196,7 +201,7 @@ newModule.controller("EditEventsController", function ($scope, $rootScope, $loca
                 });
                 activeHref("#!/events");
                 $('[data-toggle="tooltip"]').tooltip()
-
+                delSpin(true);
             });
         });
 
