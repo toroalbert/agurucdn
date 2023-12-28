@@ -1,0 +1,63 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Icons</h1>
+
+    <div class="row">
+
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-body p-3">
+                    <div class="input-group">
+                        <input type="text"
+                            class="form-control bg-light border-0 small ng-valid ng-dirty ng-valid-parse ng-touched ng-empty"
+                            placeholder="Search icon..." aria-label="Search" aria-describedby="basic-addon2"
+                            ng-model="searchText">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card shadow mb-4" ng-repeat="(category, data) in toArray(categories) | filter: searchText">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ data.label }}</h6>
+                </div>
+                <div class="card-body p-3">
+                    <div class="card m-2" ng-repeat="icon in data.icons">
+                        <div class="card-body p-4">
+                            <i class="fa fa-{{ icon }} fa-3x" title="{{ icon }}" ng-click="copyIcon(icon)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    .card-body .card {
+        width: 5.9rem;
+        float: left;
+        transition: 0.5s all;
+    }
+
+    .card-body .card:hover {
+        color: black;
+        transition: 0.5s all;
+        cursor: pointer;
+    }
+
+    .card-body .card .fa:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>

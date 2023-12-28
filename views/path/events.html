@@ -1,0 +1,83 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Events</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Events List
+                <a href="#!/addevents" class="text-success float-right" >
+                    <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Agregar Evento"></i>
+                </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="eventsTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>logo</th>
+                            <th>Create</th>
+                            <th class="col-1">Options</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>logo</th>
+                            <th>Create</th>
+                            <th>Options</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr ng-repeat="item in eventsArray">
+                            <td>{{item.name}}</td>
+                            <td>
+                                <a href="./img/events/{{item.logo}}" target="_blank" data-toggle="modal"
+                                    data-target="#imageModal">
+                                    {{item.name}}
+                                </a>
+                            </td>
+                            <td>
+                                <span data-toggle="tooltip" data-placement="top" title="Time: {{ item.create_at.$date.$numberLong | date:'HH:mm:ss':'UTC' }}">
+                                    {{ item.create_at.$date.$numberLong | date:'yyyy-MM-dd':'UTC' }}
+                                </span>
+                            </td>
+                            <!-- <td>{{ item.create_at.$date.$numberLong | date:'yyyy-MM-dd HH:mm:ss':'America/Caracas' }}</td> -->
+                            <td class="text-center">
+                                <a href="#!/editevents/{{item._id.$oid}}" class=" text-success">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="#!/deleteevents/{{item._id.$oid}}" class=" text-success">
+                                    <i class="fa fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imagen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" class="img-fluid" alt="Imagen SVG">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
