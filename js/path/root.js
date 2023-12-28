@@ -2,25 +2,25 @@
 customRoutes = [
     {
         path: '/home',
-        templateUrl: './views/desing/home.html',
+        templateUrl: $base_url + 'views/desing/home.html',
         controller: 'RootHomeController',
         requiresAuth: true,
     },
     {
         path: '/events',
-        templateUrl: './views/path/events.html',
+        templateUrl: $base_url + 'views/path/events.html',
         controller: 'EventsController',
         requiresAuth: true,
     },
     {
         path: '/addevents',
-        templateUrl: './views/path/events_add.html',
+        templateUrl: $base_url + 'views/path/events_add.html',
         controller: 'AddEventsController',
         requiresAuth: true,
     },
     {
         path: '/editevents/:eventId',
-        templateUrl: './views/path/events_add.html',
+        templateUrl: $base_url + 'views/path/events_add.html',
         controller: 'EditEventsController',
         requiresAuth: true,
     }
