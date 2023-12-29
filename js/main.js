@@ -324,7 +324,7 @@ function loadScript(alias) {
         return Promise.resolve();
     }
 
-    const scriptPath = 'js/path/' + alias + '.js';
+    const scriptPath = $base_url + 'js/path/' + alias + '.js';
 
     return new Promise((resolve, reject) => {
         $.ajax({
