@@ -4,40 +4,46 @@
     <h1 class="h3 mb-4 text-gray-800">{{h1}}</h1>
 
     <!-- DataTales Example -->
-    <form id="eventoForm">
+    <form id="eventoForm" ng-submit="submitEvent()" method="post" enctype="multipart/form-data">
+        <!-- <form id="eventoForm" action="api/addevent" method="post" enctype="multipart/form-data"> -->
         <div class="card shadow mb-4 text-hidden">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Event Data
-                    <a href="#!/events" class="text-success float-right" >
+                    <a href="#!/events" class="text-success float-right">
                         <i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Lita de Eventos"></i>
                     </a>
                 </h6>
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Evento" required ng-model="evento.name"
-                        ng-keyup="genSlug()">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del Evento"
+                        required ng-model="evento.name" ng-keyup="genSlug()">
                 </div>
 
                 <div class="form-group">
                     <label for="slug">Slug</label>
-                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Slug del Evento" readonly ng-model="evento.slug">
+                    <input type="text" class="form-control" id="slug" name="slug" placeholder="Slug del Evento" readonly
+                        ng-model="evento.slug">
                 </div>
 
                 <div class="form-group">
-                    <label for="logo">Logo</label>
+                    <label for="newlogo">Logo</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend" ng-if="evento.logo">
                             <a href="./img/events/{{evento.logo}}" target="_blank" data-toggle="modal"
                                 data-target="#imageModal" class="input-group-text" id="inputGroupFileAddon01">
-                                <i class="fa fa-images"></i>
+                                <i class="fa fa-images" data-toggle="tooltip" data-placement="top"
+                                    title="Logo Actual"></i>
                             </a>
                         </div>
+                        <!-- <input type="file" name="newlogo" id="" class="form-control" > -->
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                aria-describedby="inputGroupFileAddon01" accept="image/*" ng-model="evento.newlogo">
-                            <label class="custom-file-label" for="inputGroupFile01">File</label>
+                            <input type="file" class="custom-file-input" id="newlogo"
+                                aria-describedby="inputGroupFileAddon01" accept="image/*" name="newlogo" ngf-select
+                                ng-model="evento.newlogo" ngf-accept="'image/*'">
+                            <label class="custom-file-label" for="newlogo">{{evento.newlogo.name || "Select
+                                File"}}</label>
                         </div>
                     </div>
                 </div>
@@ -46,8 +52,8 @@
                     <div class="form-group col-lg-6">
                         <label for="logo">Color Primario</label>
                         <div class="input-group">
-                            <input type="color" class="form-control input-group-prepend col-1" id="colorPrimario"
-                                name="colorPrimario" ng-model="evento.cpri">
+                            <input type="color" class="form-control input-group-prepend col-3 col-lg-1"
+                                id="colorPrimario" name="colorPrimario" ng-model="evento.cpri">
                             <input type="text" class="form-control" id="colorPrimario" name="colorPrimario"
                                 ng-model="evento.cpri">
                         </div>
@@ -55,8 +61,8 @@
                     <div class="form-group col-lg-6">
                         <label for="logo">Color Secundario</label>
                         <div class="input-group">
-                            <input type="color" class="form-control input-group-prepend col-1" id="colorPrimario"
-                                name="colorPrimario" ng-model="evento.csec">
+                            <input type="color" class="form-control input-group-prepend col-3 col-lg-1"
+                                id="colorPrimario" name="colorPrimario" ng-model="evento.csec">
                             <input type="text" class="form-control" id="colorPrimario" name="colorSecundario"
                                 ng-model="evento.csec">
                         </div>
@@ -69,10 +75,11 @@
                     <label class="form-check-label" for="register">Registro Habilitado</label>
                 </div>
 
-                <div class="form-group" ng-model="evento.rol_defoult" ng-if="evento.register">
+                <div class="form-group" ng-if="evento.register">
                     <label for="roles">Seleccionar Rol</label>
-                    <select class="form-control" id="roles" name="roles" ng-required="evento.register">
-                        <option value="">Seleccione un Rol</option>
+                    <select class="form-control" id="roles" name="roles" ng-required="evento.register"
+                        ng-model="evento.rol_defoult.$oid">
+                        <option value="" selected>Seleccione un Rol</option>
                         <option value="65866c64b4a50f76386164dc">Admin</option>
                         <option value="65866d56b4a50f76386164dd">Delegación</option>
                         <option value="65866d76b4a50f76386164de">Prensa</option>
@@ -81,7 +88,7 @@
                     </select>
                 </div>
             </div>
-        <!-- </div>
+            <!-- </div>
         <div class="card shadow mb-4"> -->
             <div class="card-header">
                 Campos Base de Registro
@@ -89,10 +96,10 @@
             <div class="card-body">
                 <div class="form-group" ng-repeat="campo in evento.campos">
                     <div class="input-group">
-                        <input class="form-control" type="text" ng-model="campo.name" placeholder="Nombre del campo"
-                            required>
-                        <input class="form-control" type="text" ng-model="campo.alias" placeholder="Alias del campo"
-                            required>
+                        <input class="form-control" type="text" name="camp.name[]" ng-model="campo.name"
+                            placeholder="Nombre del campo" required>
+                        <input class="form-control" type="text" name="camp.alias[]" ng-model="campo.alias"
+                            placeholder="Alias del campo" required>
                         <!-- Otros campos que necesites -->
                         <div class="input-group-prepend" role="button" ng-click="removeCampo($index)">
                             <span class="input-group-text text-danger">

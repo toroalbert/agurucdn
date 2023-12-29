@@ -13,13 +13,13 @@
             </h6>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive hide-scrollBar">
                 <table class="table table-bordered" id="eventsTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>logo</th>
-                            <th>Create</th>
+                            <th class="col-3">Name</th>
+                            <th class="col-3">logo</th>
+                            <th class="col-4">Create</th>
                             <th class="col-1">Options</th>
                         </tr>
                     </thead>
@@ -32,7 +32,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr ng-repeat="item in eventsArray">
+                        <tr ng-repeat="item in eventsArray" class="tr-{{item._id.$oid}}">
                             <td>{{item.name}}</td>
                             <td>
                                 <a href="./img/events/{{item.logo}}" target="_blank" data-toggle="modal"
@@ -49,11 +49,11 @@
                             <!-- <td>{{ item.create_at.$date.$numberLong | date:'yyyy-MM-dd HH:mm:ss':'America/Caracas' }}</td> -->
                             <td class="text-center">
                                 <a href="#!/editevents/{{item._id.$oid}}" class=" text-success">
-                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>
                                 </a>
                                 <a ng-click="deleteevents(item)" data-toggle="modal" data-target="#delEventModal"
                                     class=" text-success">
-                                    <i class="fa fa-trash-alt"></i>
+                                    <i class="fa fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
                                 </a>
                             </td>
                         </tr>

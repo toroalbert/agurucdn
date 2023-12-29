@@ -51,7 +51,7 @@ $sidebar = [
     },
 ];
 
-var newModule = angular.module("root-module", ['ngRoute']);
+var newModule = angular.module("root-module", ['ngRoute', 'app-root', 'ngFileUpload']);
 
 newModule.config(function ($routeProvider) {
     // console.log("ROOT FILE CONFIG");
@@ -66,17 +66,20 @@ newModule.config(function ($routeProvider) {
 });
 
 
-newModule.controller("RootHomeController", function ($scope, $rootScope, $location, $http) {
+newModule.controller("RootHomeController", function ($scope, $rootScope, $location, $http, UserService) {
     // console.log("ROOT FILE Controller");
     $rootScope.title = `${title} - Home`;
     $rootScope.sidebar = $sidebar;
+    $rootScope.user = UserService.getUser();
 });
 
 
-newModule.controller("EventsController", function ($scope, $rootScope, $location, $http, $timeout) {
+newModule.controller("EventsController", function ($scope, $rootScope, $location, $http, $timeout, UserService) {
     // console.log("ROOT FILE Controller");
     $rootScope.title = `${title} - Events`;
     $rootScope.sidebar = $sidebar;
+    $rootScope.user = UserService.getUser();
+
     $scope.eventsArray = [];
     addSpin("h1");
 
@@ -122,10 +125,12 @@ newModule.controller("EventsController", function ($scope, $rootScope, $location
     }
 });
 
-newModule.controller("AddEventsController", function ($scope, $rootScope, $location, $http, $timeout) {
+newModule.controller("AddEventsController", function ($scope, $rootScope, $location, $http, $timeout, UserService) {
     $rootScope.title = `${title} - Agregar Evento`;
     $rootScope.sidebar = $sidebar;
     $scope.h1 = "Agregar Evento ";
+    $rootScope.user = UserService.getUser();
+
     addSpin("h1");
     $scope.genSlug = function () {
         if ($scope.evento && $scope.evento.name) {
@@ -158,6 +163,38 @@ newModule.controller("AddEventsController", function ($scope, $rootScope, $locat
         $scope.evento.campos.splice(index, 1);
     };
 
+    $scope.submitEvent = function () {
+
+        let $formData = new FormData($("#eventoForm")[0]);
+
+        addSpin("h1");
+        $http({
+            method: 'POST',
+            // url: 'api/addevent',
+            url: 'api/request',
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+                // 'Content-Type': false,
+                'Content-Type': undefined,
+                'Authorization': 'Basic ' + btoa(`${token}:`)
+            },
+            data: $formData,
+            transformRequest: angular.identity
+        })
+            .then(function (response) {
+                console.log(response);
+                // $location.path('/events');
+            })
+            .catch(function (response) {
+                console.error(response);
+                delSpin(false);
+            }).finally(function () {
+                $timeout(function () {
+                    delSpin(true);
+                });
+            })
+    };
+
     $timeout(function () {
         activeHref("#!/events");
         $('[data-toggle="tooltip"]').tooltip()
@@ -167,9 +204,10 @@ newModule.controller("AddEventsController", function ($scope, $rootScope, $locat
 });
 
 
-newModule.controller("EditEventsController", function ($scope, $rootScope, $location, $http, $timeout, $routeParams) {
+newModule.controller("EditEventsController", function ($scope, $rootScope, $location, $http, $timeout, $routeParams, UserService) {
     $rootScope.title = `${title} - Editar Evento`;
     $rootScope.sidebar = $sidebar;
+    $rootScope.user = UserService.getUser();
     let eventId = $routeParams.eventId;
     $scope.h1 = "Editar Evento ";
     addSpin("h1");

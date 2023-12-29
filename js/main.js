@@ -9,7 +9,7 @@ app.run(function ($rootScope, $location, $rootScope) {
         // Llamada a la función al cambiar de ruta
         val_login($location, $rootScope, next);
         var requiredRoles = next.$$route && next.$$route.requiredRoles;
-       
+
         if (requiredRoles && !checkUserRole(requiredRoles)) {
             // El usuario no tiene los roles necesarios, redirige a alguna página de error o a otra página
             event.preventDefault();
@@ -59,17 +59,37 @@ app.directive('preload', function () {
     };
 });
 
-app.controller("HomeController", function ($scope, $rootScope) {
+app.service('UserService', function () {
+    var user = JSON.parse(localStorage.getItem('user')) || {}; // Almacena la información del usuario
+
+    return {
+        getUser: function () {
+            return user;
+        },
+        setUser: function (newUser) {
+            user = newUser;
+            localStorage.setItem('user', JSON.stringify(user));
+        },
+        clearUser: function () {
+            user = {};
+            localStorage.removeItem('user');
+        }
+    };
+});
+
+app.controller("HomeController", function ($scope, $rootScope, UserService) {
     // Resto del código para HomeController
     $rootScope.title = `${title} - Home`;
     $rootScope.sidebar = $sidebar;
+    $rootScope.user = UserService.getUser();
 });
 
-app.controller("iconsController", function ($scope, $rootScope, $location, $http) {
+app.controller("iconsController", function ($scope, $rootScope, $location, $http, UserService) {
     // Resto del código para HomeController
     $rootScope.title = `${title} - Icons`;
     $rootScope.sidebar = $sidebar;
     $scope.searchText = $rootScope.searchText;
+    $rootScope.user = UserService.getUser();
     // $scope.filteredCategories = [];
 
     // Ruta al archivo categories.yml
@@ -105,7 +125,7 @@ app.controller("iconsController", function ($scope, $rootScope, $location, $http
     };
 });
 
-app.controller("LoginController", function ($scope, $rootScope, $location, $http) {
+app.controller("LoginController", function ($scope, $rootScope, $location, $http, UserService) {
     $rootScope.title = `${title} - Login`;
     if (token) {
         $location.path('/home');
@@ -133,6 +153,8 @@ app.controller("LoginController", function ($scope, $rootScope, $location, $http
                     // Guardar el token en localStorage
                     // localStorage.setItem('token', response.data.answer.token);
                     // console.log("Supuesto Token", response.data.answer.token);
+                    // $rootScope.user = response.data.answer;
+                    UserService.setUser(response.data.answer);
                     setCookie("token", response.data.answer.token, 45);
                     localStorage.setItem('userRole', response.data.answer.rol_alias);
 
@@ -161,7 +183,7 @@ app.controller("LoginController", function ($scope, $rootScope, $location, $http
     startAnimation();
 });
 
-app.controller("RegisterController", function ($scope, $rootScope, $location, $http) {
+app.controller("RegisterController", function ($scope, $rootScope, $location, $http, UserService) {
     $rootScope.title = `${title} - Register`;
     if (token) {
         $location.path('/home');
@@ -190,6 +212,7 @@ app.controller("RegisterController", function ($scope, $rootScope, $location, $h
                     // Guardar el token en localStorage
                     // localStorage.setItem('token', response.data.answer.token);
                     // console.log("Supuesto Token", response.data.answer.token);
+                    UserService.setUser(response.data.answer);
                     setCookie("token", response.data.answer.token, 45);
                     localStorage.setItem('userRole', response.data.answer.rol_alias);
                     // Redirigir a la página de inicio
@@ -247,7 +270,7 @@ app.controller("RegisterController", function ($scope, $rootScope, $location, $h
     startAnimation();
 });
 
-app.controller("LogOutController", function ($scope, $rootScope, $location) {
+app.controller("LogOutController", function ($scope, $rootScope, $location, UserService) {
     $rootScope.title = `${title} - Log Out`;
 
     // Elimitar TOken de usuario
@@ -255,7 +278,7 @@ app.controller("LogOutController", function ($scope, $rootScope, $location) {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
-
+    UserService.clearUser();
     // Cierra la modal con el Boton 'btn-LogOutClose'
     $(".btn-LogOutClose").click();
 
