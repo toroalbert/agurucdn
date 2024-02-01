@@ -1,0 +1,84 @@
+<div class="container-fluid ">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">{{h1}}</h1>
+
+    <!-- DataTales Example -->
+    <form id="Form" ng-submit="submitEvent()" method="post" enctype="multipart/form-data">
+        <!-- <form id="eventoForm" ng-attr-action="{{ id ? 'api/update/event/' + id : 'api/create/event' }}" method="post"  enctype="multipart/form-data">-->
+        <input type="hidden" name="token" value="{{token}}">
+        <div class="card shadow mb-4 text-hidden">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{{segment}} Data
+                    <a href="#!/{{segment}}" class="text-success float-right">
+                        <i class="fa fa-list" data-toggle="tooltip" data-placement="top"
+                            title="Lita de {{segment}}"></i>
+                    </a>
+                </h6>
+            </div>
+            <div class="card-body mb-0">
+                <div class="form-group" ng-repeat="field in event.fields" bind-html-compile="generateFieldHTML(field)">
+
+
+                </div>
+            </div>
+            <div class="card-header" >
+                Type Person
+            </div>
+            <div class="card-body mb-0">
+                <h6 ng-if="!typePersonHtml"><i class="fa fa-spin fa-spinner"></i> Cargando...</h6>
+                <div class="form-group" ng-if="typePersonHtml" bind-html-compile="typePersonHtml">
+
+                </div>
+                <div class="form-group" ng-if="datos.typePerson" ng-repeat="field in typePersonFields[datos.typePerson]"
+                    bind-html-compile="generateFieldHTML(field)">
+
+                </div>
+            </div>
+            <div class="card-header" ng-if="datos.typePerson == 'sportsman'">
+                Deporte
+            </div>
+            <div class="card-body" ng-if="datos.typePerson == 'sportsman'">
+                <div class="form-group" ng-if="typeSportHtml" bind-html-compile="typeSportHtml">
+
+                </div>
+                <div class="form-group" ng-if="datos.typeSport" ng-repeat="field in typeSportFields[datos.typeSport]"
+                    bind-html-compile="generateFieldHTML(field)">
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">{{h1}}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imagen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <a href="" target="_blank" rel="noopener noreferrer">
+                    <img src="" class="img-fluid" alt="Imagen SVG">
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // setTimeout(() => {
+    // $(document).on('DOMSubtreeModified', function () {
+    //     // // Tu código para manejar cambios en el DOM
+    //     // console.log('El DOM ha sido modificado');
+    // });
+    // }, 1000);
+</script>

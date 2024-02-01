@@ -1,12 +1,12 @@
 <div class="container-fluid ">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Events</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{h1}}</h1>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4 text-hidden">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Events List
+            <h6 class="m-0 font-weight-bold text-primary">{{h1}} List
                 <a href="#!/addevents" class="text-success float-right">
                     <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Agregar Evento"></i>
                 </a>
@@ -17,14 +17,16 @@
                 <table class="table table-bordered" id="eventsTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th class="col-2">Slug</th>
                             <th class="col-3">Name</th>
-                            <th class="col-3">logo</th>
-                            <th class="col-4">Create</th>
-                            <th class="col-1">Options</th>
+                            <th class="col-2">logo</th>
+                            <th class="col-3">Create</th>
+                            <th class="col-2">Options</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>Slug</th>
                             <th>Name</th>
                             <th>logo</th>
                             <th>Create</th>
@@ -33,10 +35,11 @@
                     </tfoot>
                     <tbody>
                         <tr ng-repeat="item in eventsArray" class="tr-{{item._id.$oid}}">
+                            <td class="text-primary">{{item.slug}}</td>
                             <td>{{item.name}}</td>
                             <td>
-                                <a href="./img/events/{{item.logo}}" target="_blank" data-toggle="modal"
-                                    data-target="#imageModal">
+                                <a href="./img/events/{{item.logo}}" ng-if="item.logo" target="_blank"
+                                    data-toggle="modal" data-target="#imageModal">
                                     ver
                                 </a>
                             </td>
@@ -47,14 +50,24 @@
                                 </span>
                             </td>
                             <!-- <td>{{ item.create_at.$date.$numberLong | date:'yyyy-MM-dd HH:mm:ss':'America/Caracas' }}</td> -->
-                            <td class="text-center">
-                                <a href="#!/editevents/{{item._id.$oid}}" class=" text-success">
-                                    <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>
-                                </a>
-                                <a ng-click="deleteevents(item)" data-toggle="modal" data-target="#delEventModal"
-                                    class=" text-success">
-                                    <i class="fa fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Eliminar"></i>
-                                </a>
+                            <td>
+                                <div class="custom-control custom-switch w-50 float-left text-right">
+                                    <input type="radio" name="eventActive" value="{{item._id.$oid}}"
+                                        id="ch-{{item._id.$oid}}" class="custom-control-input eventActive"
+                                        ng-checked="item.active" ng-click="activeEvent(item._id.$oid)">
+                                    <label class="custom-control-label" for="ch-{{item._id.$oid}}"></label>
+                                </div>
+                                <div class="w-50 float-left text-left">
+                                    <a href="#!/editevents/{{item._id.$oid}}" class=" text-success">
+                                        <i class="fa fa-edit" data-toggle="tooltip" data-placement="top"
+                                            title="Editar"></i>
+                                    </a>
+                                    <a ng-click="deleteevents(item)" data-toggle="modal" data-target="#delEventModal"
+                                        class=" text-success">
+                                        <i class="fa fa-trash-alt" data-toggle="tooltip" data-placement="top"
+                                            title="Eliminar"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -75,7 +88,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img src="" class="img-fluid" alt="Imagen SVG">
+                <a href="" target="_blank" rel="noopener noreferrer">
+                    <img src="" class="img-fluid" alt="Imagen SVG">
+                </a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

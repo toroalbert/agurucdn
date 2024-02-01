@@ -35,6 +35,27 @@ let routes = [
 
 let customRoutes = [];
 
+let webRoutes = [
+    {
+        path: '/',
+        templateUrl: $base_url + 'web/index.html',
+        // templateUrl: $base_url + 'web/appleeffect.html',
+        controller: 'HomeController',
+    },
+    {
+        path: '/calendar',
+        templateUrl: $base_url + 'web/calendar.html',
+        // templateUrl: $base_url + 'web/appleeffect.html',
+        controller: 'HomeController',
+    },
+    {
+        path: '/404',
+        templateUrl: $base_url + 'views/template/404.html',
+        controller: 'HomeController',
+    },
+];
+
+
 const templateRoutes = [
     {
         path: '/profile',

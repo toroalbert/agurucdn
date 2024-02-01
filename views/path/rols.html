@@ -1,0 +1,100 @@
+<div class="container-fluid ">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">{{h1}}</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 text-hidden">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{{h1}} List
+                <a href="#!/addrols" class="text-success float-right">
+                    <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Agregar Evento"></i>
+                </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive hide-scrollBar">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="col-3">Alias</th>
+                            <th class="col-3">Name</th>
+                            <th class="col-5">Description</th>
+                            <th class="col-1">Options</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Alias</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Options</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr ng-repeat="item in dataArray" class="tr-{{item._id.$oid}}">
+                            <td class="text-primary">{{item.alias}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.description}}</td>
+
+                            <!-- <td>{{ item.create_at.$date.$numberLong | date:'yyyy-MM-dd HH:mm:ss':'America/Caracas' }}</td> -->
+                            <td class="text-center">
+                                <a href="#!/editrols/{{item._id.$oid}}" class=" text-success">
+                                    <i class="fa fa-edit" data-toggle="tooltip" data-placement="top" title="Editar"></i>
+                                </a>
+                                <a ng-click="deleterols(item)" data-toggle="modal" data-target="#delEventModal"
+                                    class=" text-success">
+                                    <i class="fa fa-trash-alt" data-toggle="tooltip" data-placement="top"
+                                        title="Eliminar"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imagen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <a href="" target="_blank" rel="noopener noreferrer">
+                    <img src="" class="img-fluid" alt="Imagen SVG">
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                Desela Eliminar el evento "{{toDeleteName}}"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="confirmDelete" type="submit" class="btn btn-danger" data-dismiss="modal"
+                    ng-click="confirmDelete(toDelete)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="container-fluid ">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">{{h1}}</h1>
+
+    <!-- DataTales Example -->
+    <form id="eventoForm" ng-submit="submitEvent()" method="post" enctype="multipart/form-data">
+        <!-- <form id="eventoForm" ng-attr-action="{{ id ? 'api/update/event/' + id : 'api/create/event' }}" method="post"  enctype="multipart/form-data">-->
+        <input type="hidden" name="token" value="{{token}}">
+        <div class="card shadow mb-4 text-hidden">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Rol Data
+                    <a href="#!/rols" class="text-success float-right">
+                        <i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Lita de Rols"></i>
+                    </a>
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del Rol" required
+                        ng-model="rol.name" ng-keyup="genAlias()">
+                </div>
+
+                <div class="form-group">
+                    <label for="slug">Alias</label>
+                    <input type="text" class="form-control" id="alias" name="alias" placeholder="Alias del rol" readonly
+                        ng-model="rol.alias">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <textarea class="form-control" id="description" name="description" ng-model="rol.description"
+                        rows="3"></textarea>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">{{h1}}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imagen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <a href="" target="_blank" rel="noopener noreferrer">
+                    <img src="" class="img-fluid" alt="Imagen SVG">
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

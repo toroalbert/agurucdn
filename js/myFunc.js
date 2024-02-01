@@ -1,47 +1,3 @@
-function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-
-    if (match) {
-        // Obtener el valor de la cookie
-        var cookieValue = match[2];
-
-        // Comprobar si la cookie tiene fecha de caducidad
-        if (match[1].indexOf(';') === 0) {
-            // Obtener la fecha de caducidad de la cookie
-            var expirationDate = new Date(match[1].slice(1));
-
-            // Comprobar si la cookie ha caducado
-            var currentDate = new Date();
-
-            if (expirationDate > currentDate) {
-                // La cookie no ha caducado, devolver el valor
-                return cookieValue;
-            } else {
-                // La cookie ha caducado, eliminarla
-                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                return null;
-            }
-        } else {
-            // La cookie no tiene fecha de caducidad, devolver el valor
-            return cookieValue;
-        }
-    } else {
-        // No se encontró la cookie
-        return null;
-    }
-}
-
-// Función para Crear una cookie
-function setCookie(name, value, minutes) {
-    var expires = "";
-    if (minutes) {
-        var date = new Date();
-        date.setTime(date.getTime() + (minutes * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
-
 function templateExists(templatePath) {
     return result = new Promise(function (resolve, reject) {
         $.ajax({
@@ -130,3 +86,138 @@ function delSpin(success) {
 $(document).on("click", '[data-toggle="tooltip"]', function () {
     $('.tooltip.show').remove();
 });
+
+function showAlert(type, message) {
+    let errorMessagePrefix = message.split(':')[0];
+    let content = `
+    <div class="alert bg-${type} text-white alert-dismissible fade show " role="alert">
+        <strong>${errorMessagePrefix}</strong>:${message.substring(errorMessagePrefix.length + 1)}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    `;
+    $('.alert-content').html(content);
+    setTimeout(() => {
+        $('.alert-content .close').click();
+    }, 2000);
+}
+
+function getTypePerson() {
+    return fetch('./api/typePerson?token=' + encodeURIComponent(token))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            return response.json();
+        })
+        .then(data => data.answer)
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            return [];
+        });
+}
+
+function getTypeSport() {
+    return fetch('./api/typeSport?token=' + encodeURIComponent(token))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            return response.json();
+        })
+        .then(data => data.answer)
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            return [];
+        });
+}
+
+function getDelegations() {
+    return fetch('./api/user?token=' + encodeURIComponent(token) + '&delegation=true')
+        // return fetch('./api/user?token=' + encodeURIComponent(token))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            return response.json();
+        })
+        .then(data => data.answer)
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            return [];
+        });
+}
+
+function getPersons() {
+    return fetch('./api/person?token=' + encodeURIComponent(token))
+        // return fetch('./api/user?token=' + encodeURIComponent(token))
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            return response.json();
+        })
+        .then(data => data.answer)
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            return [];
+        });
+}
+
+function generateFieldHTML(field, forcalias) {
+    // console.log("forcalias", forcalias);
+    if (!forcalias) {
+        forcalias = "";
+    }
+    var html = '';
+    html += '<label for="fl-' + field.alias + forcalias + '">' + (forcalias) ? forcalias + ' ' + field.name + '</label>' : '' + field.name + '</label>';
+    switch (field.type) {
+        case 'dni':
+        case 'file':
+            html += `
+            <div class="input-group mb-3">
+                <div class="input-group-prepend" ng-if="datos.${field.alias}${forcalias}">
+                    <a href="./img/{{segment}}/{{datos.${field.alias}${forcalias}}}" target="_blank" data-toggle="modal"
+                        data-target="#imageModal" class="input-group-text" id="inputGroupFileAddon01">
+                        <i class="fa fa-images" data-toggle="tooltip" data-placement="top" title="Logo Actual">
+                        </i>
+                    </a>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="fl-new${field.alias}${forcalias}"
+                        aria-describedby="inputGroupFileAddon01" accept="image/*" name="new${field.alias}${forcalias}" ngf-select
+                        ng-model="datos.new${field.alias}${forcalias}" ngf-accept="'image/*'">
+                    <label class="custom-file-label" for="new${field.alias}${forcalias}">{{datos.new${field.alias}${forcalias}.name || "Select
+                        File"}}</label>
+                </div>
+            </div>
+            `;
+            break;
+        case 'select':
+            // <select class="form-control" ui-select2="datos.${field.alias}${forcalias}" id="fl-${field.alias}${forcalias}" name="${field.alias}${forcalias}" ng-model="datos.${field.alias}${forcalias}">
+            html += `
+            <select class="form-control" id="fl-${field.alias}${forcalias}" name="${field.alias}${forcalias}" ng-model="datos.${field.alias}${forcalias}">
+                <option value="">Seleccione ${field.name}</option>
+                `;
+            field.options.forEach(function (option) {
+                html += `
+                    <option value="${option.value}">${option.name}</option>
+                `;
+            });
+            html += `
+            </select>
+            `;
+            break;
+        case 'textarea':
+            html += `<textarea class="form-control" id="fl-${field.alias}${forcalias}" name="${field.alias}${forcalias}" placeholder="${field.name}"
+                          ng-model="datos.${field.alias}${forcalias}"></textarea>`;
+            break;
+        default:
+            html += `<input type="${field.type}" class="form-control" id="fl-${field.alias}${forcalias}" name="${field.alias}${forcalias}" placeholder="${field.name}"
+            ng-model="datos.${field.alias}${forcalias}">`;
+            break;
+    }
+
+    return html;
+}

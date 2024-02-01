@@ -5,7 +5,7 @@
 
     <!-- DataTales Example -->
     <form id="eventoForm" ng-submit="submitEvent()" method="post" enctype="multipart/form-data">
-        <!-- <form id="eventoForm" action="api/addevent" method="post" enctype="multipart/form-data"> -->
+        <input type="hidden" name="token" ng-if="token" value="{{token}}">
         <div class="card shadow mb-4 text-hidden">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Event Data
@@ -33,8 +33,8 @@
                         <div class="input-group-prepend" ng-if="evento.logo">
                             <a href="./img/events/{{evento.logo}}" target="_blank" data-toggle="modal"
                                 data-target="#imageModal" class="input-group-text" id="inputGroupFileAddon01">
-                                <i class="fa fa-images" data-toggle="tooltip" data-placement="top"
-                                    title="Logo Actual"></i>
+                                <i class="fa fa-images" data-toggle="tooltip" data-placement="top" title="Logo Actual">
+                                </i>
                             </a>
                         </div>
                         <!-- <input type="file" name="newlogo" id="" class="form-control" > -->
@@ -71,20 +71,16 @@
 
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="register" name="register"
-                        ng-model="evento.register">
+                        ng-model="evento.register" ng-true-value="true" ng-false-value="false">
                     <label class="form-check-label" for="register">Registro Habilitado</label>
                 </div>
 
                 <div class="form-group" ng-if="evento.register">
                     <label for="roles">Seleccionar Rol</label>
-                    <select class="form-control" id="roles" name="roles" ng-required="evento.register"
+                    <select class="form-control" id="roles" name="rol_defoult" ng-required="evento.register"
                         ng-model="evento.rol_defoult.$oid">
                         <option value="" selected>Seleccione un Rol</option>
-                        <option value="65866c64b4a50f76386164dc">Admin</option>
-                        <option value="65866d56b4a50f76386164dd">Delegación</option>
-                        <option value="65866d76b4a50f76386164de">Prensa</option>
-                        <option value="65866d94b4a50f76386164df">Gestor</option>
-                        <!-- Opciones de roles se llenarán dinámicamente -->
+                        <option ng-repeat="rol in rols" value="{{rol._id.$oid}}">{{rol.name}}</option>
                     </select>
                 </div>
             </div>
@@ -92,30 +88,70 @@
         <div class="card shadow mb-4"> -->
             <div class="card-header">
                 Campos Base de Registro
+                <a type="button" class="text-success float-right" ng-click="addCampo()" data-toggle="tooltip"
+                    data-placement="top" title="Agregar Campo Base">
+                    <i class="fa fa-plus"></i>
+                    <!-- Campo Base -->
+                </a>
             </div>
             <div class="card-body">
-                <div class="form-group" ng-repeat="campo in evento.campos">
-                    <div class="input-group">
-                        <input class="form-control" type="text" name="camp.name[]" ng-model="campo.name"
-                            placeholder="Nombre del campo" required>
-                        <input class="form-control" type="text" name="camp.alias[]" ng-model="campo.alias"
-                            placeholder="Alias del campo" required>
+                <div class="form-group" ng-repeat="campo in evento.fields">
+                    <h6 for="roles">
+                        Nombre y Alias
+                    </h6>
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="text" ng-model="campo.name" placeholder="Nombre del campo"
+                            required>
+                        <input class="form-control" type="text" ng-model="campo.alias" placeholder="Alias del campo"
+                            required>
                         <!-- Otros campos que necesites -->
-                        <div class="input-group-prepend" role="button" ng-click="removeCampo($index)">
+                        <div class="input-group-prepend" role="button" ng-click="removeCampo($index)"
+                            data-toggle="tooltip" data-placement="top" title="Eliminar Campo Base">
                             <span class="input-group-text text-danger">
                                 <i class="fa fa-trash"></i>
                             </span>
                         </div>
                     </div>
+                    <h6 for="roles">
+                        Tipo de Campo e Icono <a href="#!/icons" target="_blank"
+                            rel="noopener noreferrer"><sup>ver</sup></a>
+                    </h6>
+                    <div class="input-group mb-3">
+                        <select class="form-control" id="" ng-model="campo.type">
+                            <option value="">Seleccione Tipo de Campo</option>
+                            <option ng-repeat="type in types" value="{{type.input}}">{{type.name}}</option>
+                            <!-- <option value="text">Texto</option>
+                            <option value="number">Numerico</option>
+                            <option value="select">Select</option> -->
+                        </select>
+                        <input class="form-control" type="text" ng-model="campo.icon" placeholder="Icono (fa-class)">
+                    </div>
+                    <h6 class="pl-5" for="roles" ng-if="campo.type == 'select'">
+                        Opciones del Campo
+                        <a type="button" class="text-success float-right" ng-click="addOption($index)"
+                            data-toggle="tooltip" data-placement="top" title="Agregar Opcion Adicional">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </h6>
+                    <div class="border-left input-group pb-3 ml-2 pl-4" ng-if="campo.type == 'select'"
+                        ng-repeat="option in campo.options">
+                        <input class="form-control" type="text" ng-model="option.name" placeholder="Nombre de la Opcion"
+                            required>
+                        <input class="form-control" type="text" ng-model="option.value" placeholder="Valor de la Opcion"
+                            required>
+                        <div class="input-group-prepend" role="button" ng-click="removeOption(campo, $index)"
+                            data-toggle="tooltip" data-placement="top" title="Eliminar Campo Base">
+                            <span class="input-group-text text-danger">
+                                <i class="fa fa-trash"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <hr class="border-primary">
                 </div>
 
-                <button type="button" class="btn btn-secondary float-right" ng-click="addCampo()">
-                    <i class="fa fa-plus"></i>
-                    Campo Base
-                </button>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Crear Evento</button>
+                <button type="submit" class="btn btn-primary">{{h1}}</button>
             </div>
         </div>
     </form>
@@ -131,7 +167,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img src="" class="img-fluid" alt="Imagen SVG">
+                <a href="" target="_blank" rel="noopener noreferrer">
+                    <img src="" class="img-fluid" alt="Imagen SVG">
+                </a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

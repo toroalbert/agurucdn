@@ -1,22 +1,24 @@
 const title = "Agurus";
-const app = window.myApp = angular.module("app-root", ['ngRoute']);
+let app = angular.module("app-root", ['ngRoute', 'ngSanitize']);
+const sessionMinutes = 0.03125; //(45 min)
+// const sessionMinutes = 0.0001;
 var token = false;
 routes = routes.concat(templateRoutes);
 let allRoutes = routes.concat(customRoutes);
 
-app.run(function ($rootScope, $location, $rootScope) {
+app.run(function ($rootScope, $location, $rootScope, AuthService) {
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
         // Llamada a la función al cambiar de ruta
         val_login($location, $rootScope, next);
         var requiredRoles = next.$$route && next.$$route.requiredRoles;
-
+        // console.log("Aca", next);
         if (requiredRoles && !checkUserRole(requiredRoles)) {
             // El usuario no tiene los roles necesarios, redirige a alguna página de error o a otra página
             event.preventDefault();
             $location.path('/unauthorized');
         }
-
     });
+    AuthService.startTokenCheckInterval();
 });
 
 app.config(function ($routeProvider) {
@@ -73,6 +75,33 @@ app.service('UserService', function () {
         clearUser: function () {
             user = {};
             localStorage.removeItem('user');
+        }
+    };
+});
+
+app.service('AuthService', function ($location, $interval) {
+    return {
+        checkToken: function () {
+
+            var currentPath = $location.path();
+
+            // Verificar si la ruta actual es /login, /register, /forgot-password o /404
+            var currentRoute = routes.find(function (route) {
+                return route.path === currentPath;
+            });
+
+            // Verificar si la ruta existe (en las rutas principles del Sistema)
+            if (!currentRoute) {
+                token = Cookies.get('token');
+                // console.log("Verificar Token", token);
+                if (!token) {
+                    $location.path('/logout');
+                }
+            }
+        },
+        startTokenCheckInterval: function () {
+            // Establece un intervalo para verificar el token cada X milisegundos
+            $interval(this.checkToken, 1000 * 5); // Por ejemplo, cada 1 min (60 segundos)
         }
     };
 });
@@ -150,32 +179,33 @@ app.controller("LoginController", function ($scope, $rootScope, $location, $http
                 // console.log(response);
                 // Verificar la respuesta del servidor
                 if (response.data.success) {
-                    // Guardar el token en localStorage
-                    // localStorage.setItem('token', response.data.answer.token);
-                    // console.log("Supuesto Token", response.data.answer.token);
-                    // $rootScope.user = response.data.answer;
+
                     UserService.setUser(response.data.answer);
-                    setCookie("token", response.data.answer.token, 45);
+                    Cookies.set('token', response.data.answer.token, { expires: sessionMinutes })
                     localStorage.setItem('userRole', response.data.answer.rol_alias);
 
                     // Redirigir a la página de inicio
-                    $location.path('/home');
+                    // $window.location.href = '#!/home';
+                    window.location.href = '/admin';
+                    // $location.path('/home');
                 } else {
                     // Manejar el caso de inicio de sesión fallido
                     // console.log('Inicio de sesión fallido');
                 }
             })
             .catch(function (response) {
-                let errorMessagePrefix = response.data.error.split(':')[0];
-                errorHtml = `
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                         <strong>${errorMessagePrefix}</strong>:${response.data.error.substring(errorMessagePrefix.length + 1)}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                `;
-                $('.showerror').html(errorHtml);
+                // let errorMessagePrefix = response.data.error.split(':')[0];
+                // errorHtml = `
+                //     <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                //          <strong>${errorMessagePrefix}</strong>:${response.data.error.substring(errorMessagePrefix.length + 1)}
+                //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                //             <span aria-hidden="true">&times;</span>
+                //         </button>
+                //     </div>
+                // `;
+                // $('.showerror').html(errorHtml);
+
+                showAlert("danger", response.data.error);
                 console.error('Error al iniciar sesión:', response);
             });
     };
@@ -213,7 +243,7 @@ app.controller("RegisterController", function ($scope, $rootScope, $location, $h
                     // localStorage.setItem('token', response.data.answer.token);
                     // console.log("Supuesto Token", response.data.answer.token);
                     UserService.setUser(response.data.answer);
-                    setCookie("token", response.data.answer.token, 45);
+                    Cookies.set('token', response.data.answer.token, { expires: sessionMinutes })
                     localStorage.setItem('userRole', response.data.answer.rol_alias);
                     // Redirigir a la página de inicio
                     $location.path('/home');
@@ -223,16 +253,17 @@ app.controller("RegisterController", function ($scope, $rootScope, $location, $h
                 }
             })
             .catch(function (response) {
-                let errorMessagePrefix = response.data.error.split(':')[0];
-                errorHtml = `
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                         <strong>${errorMessagePrefix}</strong>:${response.data.error.substring(errorMessagePrefix.length + 1)}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                `;
-                $('.showerror').html(errorHtml);
+                // let errorMessagePrefix = response.data.error.split(':')[0];
+                // errorHtml = `
+                //     <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                //          <strong>${errorMessagePrefix}</strong>:${response.data.error.substring(errorMessagePrefix.length + 1)}
+                //         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                //             <span aria-hidden="true">&times;</span>
+                //         </button>
+                //     </div>
+                // `;
+                // $('.showerror').html(errorHtml);
+                showAlert("danger", response.data.error);
                 console.error('Error al iniciar sesión:', response);
             });
     };
@@ -275,7 +306,8 @@ app.controller("LogOutController", function ($scope, $rootScope, $location, User
 
     // Elimitar TOken de usuario
     token = false;
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    // document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    Cookies.remove('token')
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
     UserService.clearUser();
@@ -283,6 +315,7 @@ app.controller("LogOutController", function ($scope, $rootScope, $location, User
     $(".btn-LogOutClose").click();
 
     $location.path('/login');
+    // window.location.href = '/';
 
 });
 
@@ -291,7 +324,8 @@ function val_login($location, $rootScope, nextRoute) {
     var requiresAuth = nextRoute.$$route && nextRoute.$$route.requiresAuth;
 
     // Verificar si el token está presente en localStorage o cookies
-    token = getCookie('token');
+    token = Cookies.get('token');
+    $rootScope.userRole = userRole = localStorage.getItem('userRole');
     // token = "Token De Prueba";
     // console.log("token", token);
 
@@ -301,9 +335,9 @@ function val_login($location, $rootScope, nextRoute) {
         // Redirigir a la página de inicio de sesión si no hay token
         $location.path('/logout');
     }
-    if (token) {
-        loadScript(localStorage.getItem('userRole'));
-    }
+    // if (token) {
+    //     loadScript(userRole);
+    // }
 }
 
 function checkUserRole(requiredRoles) {
@@ -317,25 +351,46 @@ function serialize(datos) {
     }).join('&')
 }
 
-var loadedScripts = {};
+// var loadedScripts = {};
 
-function loadScript(alias) {
-    if (loadedScripts[alias]) {
-        return Promise.resolve();
-    }
+// function loadScript(alias) {
+//     if (loadedScripts[alias]) {
+//         return Promise.resolve();
+//     }
 
-    const scriptPath = $base_url + 'js/path/' + alias + '.js';
+//     let scriptPath = $base_url + 'js/path/' + alias + '.js' + '?v=' + Date.now();
+//     console.log("LoadScript", scriptPath);
 
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: scriptPath,
-            type: 'HEAD',
-            success: () => {
-                loadedScripts[alias] = true;
-                $("#scripts").append(`<script id="TempScript" src="${scriptPath}"></script>`);
-                resolve();
-            },
-            error: () => reject(new Error('Error al cargar el script ' + alias))
-        });
-    });
-}
+//     return new Promise((resolve, reject) => {
+//         $.ajax({
+//             url: scriptPath,
+//             type: 'HEAD',
+//             // dataType: 'script',
+//             // cache: true, // Usar la caché del navegador
+//             success: () => {
+//                 console.log("loading");
+//                 loadedScripts[alias] = true;
+//                 // $("#scripts").append(`<script id="TempScript" alias="${alias}" src="${scriptPath}"></script>`);
+//                 // $("#TempScript").change();
+//                 // resolve();
+
+
+//                 // Cargar el script dinámicamente usando $.getScript
+//                 // $.getScript(scriptPath, function () {
+//                 //     console.log("Finish Script");
+
+//                 //     // Obtener el alias del atributo y agregar el módulo a la lista de requeridos
+//                 app.requires.push(alias + "-module");
+
+//                 //     // Verificar los módulos cargados en AngularJS
+//                 console.log('Módulos cargados en AngularJS:', angular.module('app-root').requires);
+//                 //     resolve();
+//                 // });
+//             },
+//             error: () => reject(new Error('Error al cargar el script ' + alias))
+//         });
+//     }).then(() => {
+//         // app.requires.push(alias + "-module");
+//         // console.log('Módulos cargados en AngularJS:', angular.module('app-root').requires);
+//     });
+// }
