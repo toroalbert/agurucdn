@@ -32,8 +32,9 @@
                     <label for="newlogo">Logo</label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend" ng-if="datos.logo">
-                            <a href="./img/{{segment}}_{{event.slug}}/{{datos.logo}}" target="_blank" data-toggle="modal"
-                                data-target="#imageModal" class="input-group-text" id="inputGroupFileAddon01">
+                            <a href="./img/{{segment}}_{{event.slug}}/{{datos.logo}}" target="_blank"
+                                data-toggle="modal" data-target="#imageModal" class="input-group-text"
+                                id="inputGroupFileAddon01">
                                 <i class="fa fa-images" data-toggle="tooltip" data-placement="top" title="Logo Actual">
                                 </i>
                             </a>
@@ -53,6 +54,27 @@
                     <textarea class="form-control" id="description" name="description" ng-model="datos.description"
                         rows="3"></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="">Tipo de Resultados</label>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="recordType" id="recordType1"
+                            value="delegation" ng-model="datos.recordType"
+                            ng-checked="datos.recordType == 'delegation'">
+                        <label class="form-check-label" for="recordType1">
+                            por Delegacion
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="recordType" id="recordType2" value="persons"
+                            ng-model="datos.recordType" ng-checked="datos.recordType == 'persons'">
+                        <label class="form-check-label" for="recordType2">
+                            por Atleta
+                        </label>
+                    </div>
+                </div>
+
             </div>
             <div class="card-header">
                 Campos para Personas

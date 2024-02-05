@@ -795,7 +795,21 @@ $menus.forEach(function (sideitem) {
                 // console.log($scope.typeSportSelected);
             };
 
+            $scope.getPersonName = function (dni) {
+
+                // Buscar el objeto de persona en la lista original (persons) por el DNI
+                var person = $scope.persons.find(function (item) {
+                    return item.dni === dni;
+                });
+
+                // Obtener el nombre y apellido si se encuentra la persona
+                var labelText = person ? (person.name + ' ' + person.lastname) : '';
+
+                return labelText;
+            };
         }
+
+
 
         if (sideitem.typePerson) {
             $scope.datos.typePerson = null;
@@ -1145,6 +1159,19 @@ $menus.forEach(function (sideitem) {
                     }
                 });
                 // console.log($scope.typeSportSelected);
+            };
+
+            $scope.getPersonName = function (dni) {
+
+                // Buscar el objeto de persona en la lista original (persons) por el DNI
+                var person = $scope.persons.find(function (item) {
+                    return item.dni === dni;
+                });
+
+                // Obtener el nombre y apellido si se encuentra la persona
+                var labelText = person ? (person.name + ' ' + person.lastname) : '';
+
+                return labelText;
             };
 
         }

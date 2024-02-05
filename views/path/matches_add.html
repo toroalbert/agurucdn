@@ -61,9 +61,9 @@
                     <div class="form-group"
                         ng-if="(persons | filter:{delegation: deleg, typeSport: datos.sport}:true).length > 0">
                         <label for="fl-persons{{deleg}}">{{deleg}}</label>
-                        <select ui-select2="persons"
-                            class="form-control" id="fl-persons{{deleg}}" name="persons{{deleg}}[]"
-                            ng-model="datos['persons' + deleg]" data-placeholder="Seleccione Representantes de {{deleg}}" multiple>
+                        <select ui-select2="persons" class="form-control" id="fl-persons{{deleg}}"
+                            name="persons{{deleg}}[]" ng-model="datos['persons' + deleg]"
+                            data-placeholder="Seleccione Representantes de {{deleg}}" multiple>
 
                             <option
                                 ng-repeat="item in persons | filter:{delegation: deleg, typeSport: datos.sport}:true"
@@ -83,12 +83,24 @@
                 <h6>Resultados</h6>
             </div>
             <div class="card-body pb-0" ng-if="selectedOptions.length > 0">
-                <div ng-repeat="deleg in selectedOptions">
+                <div ng-if="typeSportSelected.recordType == 'delegation'" ng-repeat="deleg in selectedOptions">
                     <!-- <label for="fl-delegation">{{deleg}}</label> -->
                     <div ng-repeat="field in typeSportSelected.fieldsResult">
                         <div class="form-group" bind-html-compile="generateFieldHTML(field, deleg)">
 
 
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div ng-if="typeSportSelected.recordType == 'persons'" ng-repeat="deleg in selectedOptions">
+                    <label for="fl-delegation">{{deleg}}</label>
+                    <div ng-if="typeSportSelected.recordType == 'persons'" ng-repeat="personSel in datos['persons' + deleg]">
+                        <div ng-repeat="field in typeSportSelected.fieldsResult">
+                            <div class="form-group" bind-html-compile="generateFieldHTML(field, personSel)">
+
+
+                            </div>
                         </div>
                     </div>
                     <hr>

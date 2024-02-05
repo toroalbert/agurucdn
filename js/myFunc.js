@@ -170,8 +170,11 @@ function generateFieldHTML(field, forcalias) {
     if (!forcalias) {
         forcalias = "";
     }
+    labelText = $("option[value='" + forcalias + "']").text();
+
     var html = '';
-    html += '<label for="fl-' + field.alias + forcalias + '">' + (forcalias) ? forcalias + ' ' + field.name + '</label>' : '' + field.name + '</label>';
+    html += '<label for="fl-' + field.alias + forcalias + '">' + (labelText) ? labelText + ' ' + field.name + '</label>' : (forcalias) ? forcalias + ' ' + field.name + '</label>' : '' + field.name + '</label>';
+
     switch (field.type) {
         case 'dni':
         case 'file':

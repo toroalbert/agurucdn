@@ -14,23 +14,38 @@
     </div>
 </div>
 <script>
+
     var hoy = new Date();
-    var month = ((hoy.getMonth() + 1) > 9) ? (hoy.getMonth() + 1) : "0" + (hoy.getMonth() + 1);
-    // var fecha = hoy.getFullYear() + "-" + month + "-" + hoy.getDate();
-    var fecha = hoy.getFullYear() + "-" + month + "-01";
 
     var calendarEl = document.getElementById('calendar');
 
+    var matches = [];
+    $matches.forEach(match => {
+        matches.push({
+            id: match._id.$oid,
+            title: match.name,
+            start: new Date(parseInt(match.date.$date.$numberLong)),
+            url: "#!/match/" + match._id.$oid,
+            classNames: "class-Test",
+            color: getRandomColor(), // Asigna un color hexadecimal aleatorio
+            extendedProps: {
+                prueba: "algo"
+            },
+
+        });
+    });
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
+        // lang: 'es',
+        locale: 'es',
         themeSystem: "bootstrap5",
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            // right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
             right: 'dayGridMonth,listMonth'
         },
         navLinks: true,
-        initialDate: fecha,
+        initialDate: hoy,
         buttonIcons: {
             prev: ' fa fa-angle-left',
             next: ' fa fa-angle-right',
@@ -44,20 +59,43 @@
             list: ' fa fa-list',
         },
         buttonText: {
-            //     month: ' <i class="fa fa-calendar-alt"></i>',
-            //     list: ' <i class="fa fa-list"></i>',
-            month: 'Month',
-            list: 'List',
+            month: 'Mes',
+            list: 'Lista',
         },
-        // <i class="fas fa-calendar-day"></i>
-        // events: event
-    });
-    // console.log("event");
-    // console.log(event);
-    // if (event) {
-    calendar.render();
-    // } else {
-    //     $("#calendar").html("");
-    // }
+        eventDidMount: function (info) {
+            // Accede a las extendedProps del evento clicado
+            // var pruebaValue = info.event.extendedProps.prueba;
 
+            // Crea un elemento HTML personalizado para el tooltip
+            // var tooltipContent = document.createElement('div');
+            // tooltipContent.innerHTML = `
+            //     <strong>Título:</strong> ${info.event.title}<br>
+            //     <strong>Prueba:</strong> ${pruebaValue}
+            // `;
+
+            // Agrega un tooltip al evento
+            var tooltip = new bootstrap.Tooltip(info.el, {
+                title: `${info.event.title}`,
+                // title: `Título: ${info.event.title}, Prueba: ${pruebaValue}`,
+                // title: tooltipContent,
+                // html: true,
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
+            });
+        },
+
+        events: matches
+    });
+
+    calendar.render();
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 </script>

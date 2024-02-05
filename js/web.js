@@ -3,9 +3,15 @@ const app = angular.module("app-root", ['ngRoute', 'ngSanitize']);
 
 let allRoutes = webRoutes.concat(customRoutes);
 
-// app.run(function ($rootScope, $location, $rootScope) {
-
-// });
+app.run(function ($rootScope, $location, $rootScope, $timeout) {
+    $rootScope.$on('$locationChangeSuccess', function () {
+        // Espera un breve momento para asegurar que la vista se ha actualizado
+        $timeout(function () {
+            // Elimina los elementos .tooltip.show
+            $(".tooltip.show").remove();
+        });
+    });
+});
 
 app.config(function ($routeProvider) {
     allRoutes.forEach(route => {
@@ -41,5 +47,7 @@ app.directive('preload', function () {
 app.controller("HomeController", function ($scope, $rootScope) {
     // Resto del código para HomeController
     $rootScope.title = `${title} - Home`;
-    console.log("aca");
+    $scope.event = $event;
+    $scope.sports = $typeSport;
+    // console.log("aca");
 });
