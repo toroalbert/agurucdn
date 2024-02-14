@@ -43,10 +43,28 @@ let webRoutes = [
         controller: 'HomeController',
     },
     {
+        path: '/sports',
+        templateUrl: $base_url + 'web/sports.html',
+        // templateUrl: $base_url + 'web/appleeffect.html',
+        controller: 'HomeController',
+    },
+    {
         path: '/calendar',
         templateUrl: $base_url + 'web/calendar.html',
         // templateUrl: $base_url + 'web/appleeffect.html',
         controller: 'HomeController',
+    },
+    {
+        path: '/match/:matchId',
+        templateUrl: $base_url + 'web/match.html',
+        // templateUrl: $base_url + 'web/appleeffect.html',
+        controller: 'MatchController',
+    },
+    {
+        path: '/sportday/:ALIASSport/:dayDateNumber',
+        templateUrl: $base_url + 'web/day.html',
+        // templateUrl: $base_url + 'web/appleeffect.html',
+        controller: 'MatchController',
     },
     {
         path: '/404',

@@ -1,0 +1,103 @@
+<div class="inner-banner-header wf100">
+    <h1 data-generated="Groups">Deportes</h1>
+    <div class="gt-breadcrumbs">
+        <ul>
+            <li> <a href="#" class="active"> <i class="fas fa-home"></i> Home </a> </li>
+            <li> <a href="#"> Pages </a> </li>
+            <li> <a href="#"> Groups </a> </li>
+        </ul>
+    </div>
+</div>
+<div class="main-content innerpagebg wf100 pt-5">
+    <div class="container ">
+        <div class="row">
+            <div class="col-lg-6 mb-4" ng-repeat="sport in sports"
+                ng-if="(matches | filter:{sport: sport.alias}).length > 0">
+                <div class="card w-100 bg-transparent">
+                    <div class="card-header position-relative ps-5">
+                        <h5 class="card-title ps-4">
+                            <div class="img-sport img-{{sport.alias}}"></div>
+                            <style>
+                                .img-{{sport.alias}}{
+                                    background-image: url(img/typeSport_pdvsa/{{sport.logo}});
+                                }
+                            </style>
+                            <!-- <img src="../img/typeSport_pdvsa/0d5bad59945beb94efe3864e5f365180.png" class="img-fluid w-25" alt="..."> -->
+                            {{sport.name}}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row row-cols-6 row-cols-lg-8 g-2 g-lg-3">
+                                <a href="#!/sportday/{{match.sport}}/{{match.date.$date.$numberLong}}"
+                                    ng-repeat="match in matches | filter:{sport: sport.alias}:true"
+                                    class="col text-center text-light link-underline link-underline-opacity-0"
+                                    ng-init="fechaKey = match.sport + '-' + (match.date.$date.$numberLong | date:'dd-MM-yyyy':'UTC')"
+                                    ng-class="fechaKey">
+                                    <div class="bg-dark weekday">{{ match.date.$date.$numberLong | date:'MM' | nombreMes }}
+                                    </div>
+                                    <div class="bg-dark day-number">{{ match.date.$date.$numberLong | date:'dd':'UTC' }}
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .img-sport {
+        /* background-image: url(img/typeSport_pdvsa/0d5bad59945beb94efe3864e5f365180.png); */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position-x: 10px;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .days {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        justify-content: start;
+        padding-block: 0.4rem;
+    }
+
+    .b-day-label {
+        align-items: center;
+        /* background-color: #008578; */
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        font-weight: 700;
+        justify-content: center;
+        padding: 0.3rem 0;
+        transition: transform .2s ease;
+        width: 2.75rem;
+    }
+
+    .competition {
+        /* background: linear-gradient(50deg, #008578 0%, #00cfcd 100%); */
+        border-radius: 5px;
+    }
+
+    .competition.medals {
+        /* background: linear-gradient(50deg, rgb(217, 159, 90), rgb(252, 215, 41)); */
+        border-radius: 5px;
+    }
+
+    .weekday {
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+
+    .day-number {
+        font-size: 1.2rem;
+        padding-top: 0.3rem;
+    }
+</style>

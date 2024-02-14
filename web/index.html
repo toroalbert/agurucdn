@@ -1,104 +1,253 @@
-<div class="container pt-5">
-    <div class="row">
-        <div class="col-lg-12 mb-2 text-center">
-            <!-- <button type="button" class="btn btn-outline-secondary active">Deportes</button>
-            <a type="button" href="#!/calendar" class="btn btn-outline-secondary">Calendario</a> -->
-            <h1>Deportes</h1>
-            <hr class="my-4">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 mb-4" ng-repeat="sport in sports">
-            <div class="card w-100">
-                <div class="card-header position-relative ps-5">
-                    <h5 class="card-title ps-4">
-                        <div class="img-sport img-{{sport.alias}}"></div>
-                        <style>
-                            .img-{{sport.alias}}{
-                                background-image: url(img/typeSport_pdvsa/{{sport.logo}});
-                            }
-                        </style>
-                        <!-- <img src="../img/typeSport_pdvsa/0d5bad59945beb94efe3864e5f365180.png" class="img-fluid w-25" alt="..."> -->
-                        {{sport.name}}
-                    </h5>
+<div class="main-slider pb-5">
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item carousel-item-bg py-5 active ">
+                <img src="../img/innerbanner.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>First slide label</h5>
+                    <p>Some representative placeholder content for the second slide.
                 </div>
-                <div class="card-body">
-                    <div class="days-wrapper">
-                        <div class="days">
-                            <!-- <div class="bg-secondary single-day competition">
-                                <a href="#!/discipline/HOC/schedule/daily/2023-10-25" class="nav-link">
-                                    <div class="b-day-label competition">
-                                        <div class="weekday">mié.</div>
-                                        <div class="day-number">25</div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="bg-warning single-day competition medals">
-                                <a href="#!/discipline/HOC/schedule/daily/2023-11-03" class="nav-link">
-                                    <div class="b-day-label competition medals">
-                                        <div class="weekday">vie.</div>
-                                        <div class="day-number">03</div>
-                                    </div>
-                                </a>
-                            </div> -->
+            </div>
+            <div class="carousel-item carousel-item-bg py-5">
+                <img src="../img/innerbanner.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Second slide label</h5>
+                    <p>Some representative placeholder content for the second slide.
+                </div>
+            </div>
+            <div class="carousel-item carousel-item-bg py-5">
+                <img src="../img/innerbanner.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Third slide label</h5>
+                    <p>Some representative placeholder content for the second slide.
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<div class="main-content wf100">
+
+
+    <section class="wf100 p80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <!--Next Match Widget Start-->
+                    <div class="next-match-widget">
+                        <h5 class="title">Next Match</h5>
+                        <div class="nmw-wrap">
+                            <ul class="match-teams-vs">
+                                <li class="team-logo"><img src="images/mlogo1.png" alt=""> <strong>FC
+                                        Champs</strong> </li>
+                                <li class="mvs"> <strong class="vs">VS</strong> </li>
+                                <li class="team-logo"><img src="images/mlogo2.png" alt=""> <strong>Tigers</strong>
+                                </li>
+                            </ul>
+                            <ul class="nmw-txt">
+                                <li><strong>Super Euro League</strong></li>
+                                <li>20 December, 2020</li>
+                                <li>04:00 PM GMT+</li>
+                                <li><span>New Expo Stadium, NYK</span></li>
+                            </ul>
+                            <div class="defaultCountdown is-countdown"><span class="countdown-row countdown-show4"><span
+                                        class="countdown-section"><span class="countdown-amount">348</span><span
+                                            class="countdown-period">Days</span></span><span
+                                        class="countdown-section"><span class="countdown-amount">7</span><span
+                                            class="countdown-period">Hours</span></span><span
+                                        class="countdown-section"><span class="countdown-amount">53</span><span
+                                            class="countdown-period">Minutes</span></span><span
+                                        class="countdown-section"><span class="countdown-amount">34</span><span
+                                            class="countdown-period">Seconds</span></span></span></div>
+                            <div class="buy-ticket"><a href="#">Buy Your Ticket</a></div>
                         </div>
+                    </div>
+                    <!--Next Match Widget End-->
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <!--Next Match Fixtures Width Start  -->
+                    <div class="next-match-fixtures">
+                        <ul class="match-teams-vs">
+                            <li class="team-logo"><img src="images/nmf-logo1.png" alt=""> <strong>FC Champs</strong>
+                            </li>
+                            <li class="mvs">
+                                <p> <strong>Super Asia Cup</strong> 20 December, 2020
+                                    04:00 PM GMT+ </p>
+                                <strong class="vs">VS</strong>
+                            </li>
+                            <li class="team-logo"><img src="images/nmf-logo2.png" alt=""> <strong>Tigers</strong>
+                            </li>
+                        </ul>
+                        <ul class="nmf-loc">
+                            <li><i class="fas fa-location-arrow"></i> New Expo Stadium, NYK</li>
+                            <li><a href="#"><i class="fas fa-ticket-alt"></i> Book Tickets</a></li>
+                        </ul>
+                    </div>
+                    <!--Next Match Fixtures Width End  -->
+                    <!--Next Match Fixtures Width Start  -->
+                    <div class="next-match-fixtures">
+                        <ul class="match-teams-vs">
+                            <li class="team-logo"><img src="images/nmf-logo2.png" alt=""> <strong>Tigers</strong>
+                            </li>
+                            <li class="mvs">
+                                <p> <strong>Super Asia Cup</strong> 25 December, 2020
+                                    04:00 PM GMT+ </p>
+                                <strong class="vs">VS</strong>
+                            </li>
+                            <li class="team-logo"><img src="images/nmf-logo3.png" alt=""> <strong>Indy
+                                    Eleven</strong> </li>
+                        </ul>
+                        <ul class="nmf-loc">
+                            <li><i class="fas fa-location-arrow"></i> King Power Stadium</li>
+                            <li><a href="#"><i class="fas fa-ticket-alt"></i> Book Tickets</a></li>
+                        </ul>
+                    </div>
+                    <!--Next Match Fixtures Width End  -->
+                    <!--Next Match Fixtures Width Start  -->
+                    <div class="next-match-fixtures">
+                        <ul class="match-teams-vs">
+                            <li class="team-logo"><img src="images/nmf-logo1.png" alt=""> <strong>kangaroos</strong>
+                            </li>
+                            <li class="mvs">
+                                <p> <strong>Super Asia Cup</strong> 30 December, 2020
+                                    04:00 PM GMT+ </p>
+                                <strong class="vs">VS</strong>
+                            </li>
+                            <li class="team-logo"><img src="images/nmf-logo2.png" alt=""> <strong>Man Utd</strong>
+                            </li>
+                        </ul>
+                        <ul class="nmf-loc">
+                            <li><i class="fas fa-location-arrow"></i> Old Trafford, Manchester</li>
+                            <li><a href="#"><i class="fas fa-ticket-alt"></i> Book Tickets</a></li>
+                        </ul>
+                    </div>
+                    <!--Next Match Fixtures Width End  -->
+                </div>
+                <div class="col-lg-4">
+                    <div class="point-table-widget">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>P</th>
+                                    <th>Team</th>
+                                    <th>W</th>
+                                    <th>D</th>
+                                    <th>L</th>
+                                    <th>Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="images/tl-logo1.png" alt=""> <strong>Bethlehem</strong></td>
+                                    <td>22</td>
+                                    <td>4</td>
+                                    <td>2</td>
+                                    <td><strong>140</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td><img src="images/tl-logo2.png" alt=""> <strong>Chirston Battery</strong>
+                                    </td>
+                                    <td>19</td>
+                                    <td>3</td>
+                                    <td>5</td>
+                                    <td><strong>138</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td><img src="images/tl-logo3.png" alt=""> <strong>Charlotte</strong></td>
+                                    <td>18</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td><strong>130</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td><img src="images/tl-logo4.png" alt=""> <strong>FC Cincinnati</strong></td>
+                                    <td>17</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td><strong>126</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td><img src="images/tl-logo5.png" alt=""> <strong>Indy Eleven</strong></td>
+                                    <td>16</td>
+                                    <td>3</td>
+                                    <td>2</td>
+                                    <td><strong>110</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td><img src="images/tl-logo6.png" alt=""> <strong>Louisville City FC</strong>
+                                    </td>
+                                    <td>15</td>
+                                    <td>4</td>
+                                    <td>6</td>
+                                    <td><strong>108</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td><img src="images/tl-logo7.png" alt=""> <strong>Nashville SC</strong></td>
+                                    <td>14</td>
+                                    <td>2</td>
+                                    <td>8</td>
+                                    <td><strong>106</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td><img src="images/tl-logo8.png" alt=""> <strong>NYK Red Bulls</strong></td>
+                                    <td>13</td>
+                                    <td>1</td>
+                                    <td>9</td>
+                                    <td><strong>100</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td><img src="images/tl-logo9.png" alt=""> <strong>North Carolina</strong></td>
+                                    <td>12</td>
+                                    <td>2</td>
+                                    <td>10</td>
+                                    <td><strong>80</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td><img src="images/tl-logo10.png" alt=""> <strong>Ottawa Fury</strong></td>
+                                    <td>11</td>
+                                    <td>3</td>
+                                    <td>11</td>
+                                    <td><strong>76</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="sponsor-logos wf100">
+        <div class="container">
+            <ul class="row">
+                <li class="col-md-2 col-4 col-sm-2"> <a href="#"><img src="../img/sitelogos1.png" alt=""></a> </li>
+                <li class="col-md-2 col-4 col-sm-2"> <a href="#"><img src="../img/sitelogos2.png" alt=""></a> </li>
+                <li class="col-md-2 col-4 col-sm-2"> <a href="#"><img src="../img/sitelogos3.png" alt=""></a> </li>
+                <li class="col-md-2 col-4 col-sm-2"> <a href="#"><img src="../img/sitelogos4.png" alt=""></a> </li>
+                <li class="col-md-2 col-4 col-sm-2"> <a href="#"><img src="../img/sitelogos5.png" alt=""></a> </li>
+                <li class="col-md-2 col-4 col-sm-2"> <a href="#"><img src="../img/sitelogos6.png" alt=""></a> </li>
+            </ul>
+        </div>
+    </section>
+
 </div>
-<style>
-    .img-sport {
-        /* background-image: url(img/typeSport_pdvsa/0d5bad59945beb94efe3864e5f365180.png); */
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position-x: 10px;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .days {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.2rem;
-        justify-content: start;
-        padding-block: 0.4rem;
-    }
-
-    .b-day-label {
-        align-items: center;
-        /* background-color: #008578; */
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-        font-weight: 700;
-        justify-content: center;
-        padding: 0.3rem 0;
-        transition: transform .2s ease;
-        width: 2.75rem;
-    }
-
-    .competition {
-        /* background: linear-gradient(50deg, #008578 0%, #00cfcd 100%); */
-        border-radius: 5px;
-    }
-
-    .competition.medals {
-        /* background: linear-gradient(50deg, rgb(217, 159, 90), rgb(252, 215, 41)); */
-        border-radius: 5px;
-    }
-
-    .weekday {
-        font-size: 1rem;
-        text-transform: uppercase;
-    }
-
-    .day-number {
-        font-size: 1.2rem;
-        padding-top: 0.3rem;
-    }
-</style>

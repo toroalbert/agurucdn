@@ -167,13 +167,16 @@ function getPersons() {
 
 function generateFieldHTML(field, forcalias) {
     // console.log("forcalias", forcalias);
+    var labelText = "";
     if (!forcalias) {
         forcalias = "";
+    } else {
+
+        labelText = $("option[value='" + forcalias + "']").text();
     }
-    labelText = $("option[value='" + forcalias + "']").text();
 
     var html = '';
-    html += '<label for="fl-' + field.alias + forcalias + '">' + (labelText) ? labelText + ' ' + field.name + '</label>' : (forcalias) ? forcalias + ' ' + field.name + '</label>' : '' + field.name + '</label>';
+    html += '<label for="fl-' + field.alias + forcalias + '">' + (labelText) ? labelText + ' ' + field.name + '</label>' : (forcalias != "") ? forcalias + ' ' + field.name + '</label>' : '' + field.name + '</label>';
 
     switch (field.type) {
         case 'dni':
@@ -223,4 +226,15 @@ function generateFieldHTML(field, forcalias) {
     }
 
     return html;
+}
+
+
+function setTheme($theme) {
+    $("html").attr("data-bs-theme", $theme);
+    if ($theme == "dark") {
+        $("#theme-active").attr("class", "fa-thin fa-moon-stars");
+    } else {
+        $("#theme-active").attr("class", "fa-thin fa-sun");
+    }
+    localStorage.setItem("theme", $theme);
 }
